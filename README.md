@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Nanoware/WoodAndStone.png?label=ready&title=Ready)](https://waffle.io/Nanoware/WoodAndStone)
 WoodAndStone
 ============
 
