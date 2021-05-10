@@ -1,5 +1,5 @@
 {
-    "BlockDropGrammar": {
+    "DropGrammar": {
         "itemDrops": ["4*WoodAndStone:Stone", "2*WoodAndStone:Stick"]
     },
     "InteractionTarget": {},
@@ -33,9 +33,11 @@
     "Health": {
         "currentHealth": 5,
         "maxHealth": 5,
-        "regenRate": 1,
-        "waitBeforeRegen": 2,
         "destroyEntityOnNoHealth": true
+    },
+    "BaseRegen": {
+        "regenRate": 1,
+        "waitBeforeRegen": 2
     },
     "ActAsBlock": {
         "block": "WoodAndStone:StandardWoodStation"

@@ -15,15 +15,14 @@
  */
 package org.terasology.was.component;
 
-import org.terasology.entitySystem.Component;
-import org.terasology.logic.inventory.ItemDifferentiating;
-import org.terasology.world.block.items.AddToBlockBasedItem;
+import org.terasology.engine.entitySystem.Component;
+import org.terasology.module.inventory.components.ItemDifferentiating;
+import org.terasology.engine.world.block.items.AddToBlockBasedItem;
 
 import java.util.Objects;
 
-@ItemDifferentiating
 @AddToBlockBasedItem
-public class TreeTypeComponent implements Component {
+public class TreeTypeComponent implements Component, ItemDifferentiating {
     public String treeType;
 
     @Override

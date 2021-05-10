@@ -15,8 +15,8 @@
  */
 package org.terasology.crafting.system.recipe.render;
 
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.module.inventory.ui.ItemIcon;
 
 import java.util.List;
 

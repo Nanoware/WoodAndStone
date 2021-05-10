@@ -1,9 +1,8 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "WoodAndStone:items.UnlitTorch",
-        "stackId": "WoodAndStone:items.UnlitTorch",
-        "renderWithIcon": true
+        "icon": "WoodAndStone:items#UnlitTorch",
+        "stackId": "WoodAndStone:items#UnlitTorch"
     },
     "DisplayName": {
         "name": "Unlit Torch"

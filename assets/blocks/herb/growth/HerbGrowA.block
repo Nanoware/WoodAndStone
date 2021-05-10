@@ -1,7 +1,7 @@
 {
-    "basedOn" : "core:plant",
+    "basedOn" : "CoreAssets:plant",
     "entity": {
         "prefab": "WoodAndStone:HerbGrowing"
     },
-    "tile": "Crops:Corn1"
+    "tile": "PlantPack:Corn1"
 }

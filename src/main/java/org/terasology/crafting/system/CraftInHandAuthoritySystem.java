@@ -15,23 +15,22 @@
  */
 package org.terasology.crafting.system;
 
+import org.joml.Vector3f;
 import org.terasology.crafting.event.UserCraftInHandRequest;
 import org.terasology.crafting.system.recipe.hand.CraftInHandRecipe;
-import org.terasology.entitySystem.entity.EntityManager;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.logic.inventory.PickupBuilder;
-import org.terasology.logic.location.LocationComponent;
-import org.terasology.registry.In;
+import org.terasology.engine.entitySystem.entity.EntityManager;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.module.inventory.systems.InventoryManager;
+import org.terasology.engine.logic.inventory.events.DropItemEvent;
+import org.terasology.engine.logic.location.LocationComponent;
+import org.terasology.engine.registry.In;
 
 import java.util.List;
 
-/**
- * @author Marcin Sciesinski <marcins78@gmail.com>
- */
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class CraftInHandAuthoritySystem extends BaseComponentSystem {
     @In
@@ -39,12 +38,8 @@ public class CraftInHandAuthoritySystem extends BaseComponentSystem {
     @In
     private CraftInHandRecipeRegistry recipeRegistry;
 
-    private PickupBuilder pickupBuilder;
-
-    @Override
-    public void initialise() {
-        pickupBuilder = new PickupBuilder(entityManager);
-    }
+    @In
+    private InventoryManager inventoryManager;
 
     @ReceiveEvent
     public void craftInHandRequestReceived(UserCraftInHandRequest event, EntityRef character) {
@@ -57,7 +52,7 @@ public class CraftInHandAuthoritySystem extends BaseComponentSystem {
                 if (result != null) {
                     EntityRef resultEntity = result.craft(character, event.getCount());
                     if (resultEntity.exists()) {
-                        pickupBuilder.createPickupFor(resultEntity, character.getComponent(LocationComponent.class).getWorldPosition(), 200, true);
+                        resultEntity.send(new DropItemEvent(character.getComponent(LocationComponent.class).getWorldPosition(new Vector3f())));
                     }
                 }
             }

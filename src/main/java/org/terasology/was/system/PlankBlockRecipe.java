@@ -24,12 +24,12 @@ import org.terasology.crafting.system.recipe.render.result.BlockRecipeResultFact
 import org.terasology.crafting.system.recipe.workstation.AbstractWorkstationRecipe;
 import org.terasology.crafting.system.recipe.workstation.CraftingStationIngredientPredicate;
 import org.terasology.crafting.system.recipe.workstation.CraftingStationToolPredicate;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.registry.CoreRegistry;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.block.BlockUri;
 import org.terasology.was.component.TreeTypeComponent;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.block.BlockUri;
 
 import java.util.List;
 
@@ -59,12 +59,12 @@ public class PlankBlockRecipe extends AbstractWorkstationRecipe {
             if (split.length == 2) {
                 String treeType = split[1];
                 String blockType = "WoodAndStone:" + treeType + "Plank";
-                BlockUri customBlockUri = new BlockUri("WoodAndStone", treeType + "Plank");
-                if (blockManager.hasBlockFamily(customBlockUri)) {
+                BlockUri customBlockUri = new BlockUri("WoodAndStone:" + treeType + "Plank");
+                if (blockManager.getBlockFamily(customBlockUri) != null) {
                     return blockManager.getBlockFamily(appendShapeIfNeeded(blockType)).getArchetypeBlock();
                 }
             }
-            return blockManager.getBlockFamily(appendShapeIfNeeded("Core:Plank")).getArchetypeBlock();
+            return blockManager.getBlockFamily(appendShapeIfNeeded("CoreAssets:Plank")).getArchetypeBlock();
         }
 
         private String appendShapeIfNeeded(String value) {

@@ -1,31 +1,19 @@
-/*
- * Copyright 2014 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.heat;
 
-import org.terasology.engine.Time;
-import org.terasology.entitySystem.entity.EntityRef;
+import org.joml.Vector3i;
+import org.joml.Vector3ic;
+import org.terasology.engine.core.Time;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.math.Side;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.world.BlockEntityRegistry;
+import org.terasology.engine.world.block.BlockComponent;
+import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.block.regions.BlockRegionComponent;
 import org.terasology.heat.component.HeatConsumerComponent;
 import org.terasology.heat.component.HeatProducerComponent;
-import org.terasology.math.Region3i;
-import org.terasology.math.Side;
-import org.terasology.math.geom.Vector3i;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.world.BlockEntityRegistry;
-import org.terasology.world.block.BlockComponent;
-import org.terasology.world.block.regions.BlockRegionComponent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -112,11 +100,11 @@ public final class HeatUtils {
         return residualHeat.baseHeat * Math.pow(Math.E, -1 * timeSinceHeatWasEstablished);
     }
 
-    public static Region3i getEntityBlocks(EntityRef entityRef) {
+    public static BlockRegion getEntityBlocks(EntityRef entityRef) {
         BlockComponent blockComponent = entityRef.getComponent(BlockComponent.class);
         if (blockComponent != null) {
-            Vector3i blockPosition = blockComponent.getPosition();
-            return Region3i.createBounded(blockPosition, blockPosition);
+            Vector3i blockPosition = blockComponent.getPosition(new Vector3i());
+            return new BlockRegion(blockPosition).union(blockPosition);
         }
         BlockRegionComponent blockRegionComponent = entityRef.getComponent(BlockRegionComponent.class);
         return blockRegionComponent.region;
@@ -128,15 +116,15 @@ public final class HeatUtils {
             return Collections.emptyMap();
         }
 
-        Region3i entityBlocks = getEntityBlocks(consumer);
+        BlockRegion entityBlocks = getEntityBlocks(consumer);
 
         Map<Vector3i, Side> result = new HashMap<>();
 
-        for (Vector3i entityBlock : entityBlocks) {
+        for (Vector3ic entityBlock : entityBlocks) {
             for (Side heatDirection : consumerComp.heatDirections) {
                 Vector3i heatedBlock = new Vector3i(entityBlock);
-                heatedBlock.add(heatDirection.getVector3i());
-                if (!entityBlocks.encompasses(heatedBlock)) {
+                heatedBlock.add(heatDirection.direction());
+                if (!entityBlocks.contains(heatedBlock)) {
                     result.put(heatedBlock, heatDirection);
                 }
             }
@@ -151,15 +139,15 @@ public final class HeatUtils {
             return Collections.emptyMap();
         }
 
-        Region3i entityBlocks = getEntityBlocks(producer);
+        BlockRegion entityBlocks = getEntityBlocks(producer);
 
         Map<Vector3i, Side> result = new HashMap<>();
 
-        for (Vector3i entityBlock : entityBlocks) {
+        for (Vector3ic entityBlock : entityBlocks) {
             for (Side heatDirection : producerComp.heatDirections) {
                 Vector3i heatedBlock = new Vector3i(entityBlock);
-                heatedBlock.add(heatDirection.getVector3i());
-                if (!entityBlocks.encompasses(heatedBlock)) {
+                heatedBlock.add(heatDirection.direction());
+                if (!entityBlocks.contains(heatedBlock)) {
                     result.put(heatedBlock, heatDirection);
                 }
             }

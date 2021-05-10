@@ -1,9 +1,8 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "WoodAndStone:items.Bread",
+        "icon": "WoodAndStone:items#Bread",
         "stackId": "WoodAndStone:bread",
-        "renderWithIcon": true,
         "consumedOnUse": true
     },
     "DisplayName": {

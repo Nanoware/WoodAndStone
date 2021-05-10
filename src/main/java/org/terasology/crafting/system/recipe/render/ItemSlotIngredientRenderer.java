@@ -16,17 +16,17 @@
 package org.terasology.crafting.system.recipe.render;
 
 import com.google.common.base.Function;
-import org.terasology.asset.Assets;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.logic.common.DisplayNameComponent;
-import org.terasology.logic.inventory.InventoryUtils;
-import org.terasology.logic.inventory.ItemComponent;
-import org.terasology.math.Rect2i;
-import org.terasology.math.Vector2i;
-import org.terasology.rendering.nui.Canvas;
-import org.terasology.rendering.nui.layers.ingame.inventory.GetItemTooltip;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
-import org.terasology.world.block.items.BlockItemComponent;
+import org.joml.Vector2i;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.logic.common.DisplayNameComponent;
+import org.terasology.module.inventory.systems.InventoryUtils;
+import org.terasology.engine.logic.inventory.ItemComponent;
+import org.terasology.module.inventory.ui.GetItemTooltip;
+import org.terasology.module.inventory.ui.ItemIcon;
+import org.terasology.engine.utilities.Assets;
+import org.terasology.engine.world.block.items.BlockItemComponent;
+import org.terasology.joml.geom.Rectanglei;
+import org.terasology.nui.Canvas;
 
 public class ItemSlotIngredientRenderer implements CraftIngredientRenderer {
     private ItemIcon itemIcon;
@@ -42,11 +42,11 @@ public class ItemSlotIngredientRenderer implements CraftIngredientRenderer {
         EntityRef item = InventoryUtils.getItemAt(entity, slot);
         ItemComponent itemComp = item.getComponent(ItemComponent.class);
         BlockItemComponent blockItemComp = item.getComponent(BlockItemComponent.class);
-        if (itemComp != null && itemComp.renderWithIcon) {
+        if (itemComp != null && itemComp.icon != null) {
             itemIcon.setIcon(itemComp.icon);
         } else if (blockItemComp != null) {
             itemIcon.setMesh(blockItemComp.blockFamily.getArchetypeBlock().getMesh());
-            itemIcon.setMeshTexture(Assets.getTexture("engine:terrain"));
+            itemIcon.setMeshTexture(Assets.getTexture("engine:terrain").get());
         }
         GetItemTooltip tooltipEvent;
         DisplayNameComponent displayName = item.getComponent(DisplayNameComponent.class);
@@ -66,7 +66,7 @@ public class ItemSlotIngredientRenderer implements CraftIngredientRenderer {
     }
 
     @Override
-    public void render(Canvas canvas, Rect2i region, int multiplier) {
+    public void render(Canvas canvas, Rectanglei region, int multiplier) {
         itemIcon.setQuantity(multiplierFunction.apply(multiplier));
         canvas.drawWidget(itemIcon, region);
     }

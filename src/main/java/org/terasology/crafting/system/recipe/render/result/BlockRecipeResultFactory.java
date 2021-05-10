@@ -15,14 +15,14 @@
  */
 package org.terasology.crafting.system.recipe.render.result;
 
-import org.terasology.asset.Assets;
 import org.terasology.crafting.system.recipe.render.RecipeResultFactory;
-import org.terasology.entitySystem.entity.EntityManager;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.items.BlockItemFactory;
+import org.terasology.engine.entitySystem.entity.EntityManager;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.module.inventory.ui.ItemIcon;
+import org.terasology.engine.utilities.Assets;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.items.BlockItemFactory;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class BlockRecipeResultFactory implements RecipeResultFactory {
     public void setupDisplay(List<String> parameters, ItemIcon itemIcon) {
         Block blockToDisplay = getBlock(parameters);
         itemIcon.setMesh(blockToDisplay.getMesh());
-        itemIcon.setMeshTexture(Assets.getTexture("engine:terrain"));
+        itemIcon.setMeshTexture(Assets.getTexture("engine:terrain").get());
         itemIcon.setTooltip(blockToDisplay.getDisplayName());
     }
 }

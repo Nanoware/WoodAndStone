@@ -16,7 +16,6 @@
 package org.terasology.was.system;
 
 import com.google.common.base.Predicate;
-import org.terasology.asset.Assets;
 import org.terasology.crafting.system.recipe.behaviour.ConsumeItemCraftBehaviour;
 import org.terasology.crafting.system.recipe.behaviour.InventorySlotResolver;
 import org.terasology.crafting.system.recipe.behaviour.InventorySlotTypeResolver;
@@ -25,10 +24,11 @@ import org.terasology.crafting.system.recipe.render.result.ItemRecipeResultFacto
 import org.terasology.crafting.system.recipe.workstation.AbstractWorkstationRecipe;
 import org.terasology.crafting.system.recipe.workstation.CraftingStationIngredientPredicate;
 import org.terasology.crafting.system.recipe.workstation.CraftingStationToolPredicate;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.logic.common.DisplayNameComponent;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.prefab.Prefab;
+import org.terasology.engine.logic.common.DisplayNameComponent;
+import org.terasology.module.inventory.ui.ItemIcon;
+import org.terasology.engine.utilities.Assets;
 import org.terasology.was.component.TreeTypeComponent;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class PlankRecipe extends AbstractWorkstationRecipe {
         addIngredientBehaviour(new ConsumeWoodIngredientBehaviour(woodPredicate, 1, new InventorySlotTypeResolver("INPUT")));
         addToolBehaviour(new ReduceDurabilityCraftBehaviour(axePredicate, 1, new InventorySlotTypeResolver("TOOL")));
 
-        setResultFactory(new PlankRecipeResultFactory(Assets.getPrefab("WoodAndStone:WoodPlank"), plankCount));
+        setResultFactory(new PlankRecipeResultFactory(Assets.getPrefab("WoodAndStone:WoodPlank").get(), plankCount));
     }
 
     private final class PlankRecipeResultFactory extends ItemRecipeResultFactory {

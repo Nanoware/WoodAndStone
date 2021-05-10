@@ -1,9 +1,8 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "WoodAndStone:items.RockSalt",
-        "stackId": "WoodAndStone:rockSalt",
-        "renderWithIcon": true
+        "icon": "WoodAndStone:items#RockSalt",
+        "stackId": "WoodAndStone:rockSalt"
     },
     "DisplayName": {
         "name": "Rock Salt"

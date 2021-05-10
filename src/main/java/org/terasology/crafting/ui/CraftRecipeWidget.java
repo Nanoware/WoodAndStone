@@ -15,19 +15,20 @@
  */
 package org.terasology.crafting.ui;
 
+import org.joml.Vector2i;
 import org.terasology.crafting.system.recipe.render.CraftIngredientRenderer;
 import org.terasology.crafting.system.recipe.render.CraftProcessDisplay;
-import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.module.inventory.ui.ItemIcon;
 import org.terasology.input.Keyboard;
-import org.terasology.math.Rect2i;
-import org.terasology.math.Vector2i;
-import org.terasology.rendering.nui.Canvas;
-import org.terasology.rendering.nui.CoreWidget;
-import org.terasology.rendering.nui.UIWidget;
-import org.terasology.rendering.nui.databinding.Binding;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
-import org.terasology.rendering.nui.widgets.ActivateEventListener;
-import org.terasology.rendering.nui.widgets.UIButton;
+import org.terasology.nui.Canvas;
+import org.terasology.nui.CoreWidget;
+import org.terasology.nui.UIWidget;
+import org.terasology.nui.databinding.Binding;
+import org.terasology.nui.events.NUIKeyEvent;
+import org.terasology.nui.util.RectUtility;
+import org.terasology.nui.widgets.ActivateEventListener;
+import org.terasology.nui.widgets.UIButton;
 
 /**
  * @author Marcin Sciesinski <marcins78@gmail.com>
@@ -103,28 +104,33 @@ public class CraftRecipeWidget extends CoreWidget {
 
         for (CraftIngredientRenderer craftIngredientRenderer : processDisplay.getIngredientRenderers(entity)) {
             Vector2i preferredSize = craftIngredientRenderer.getPreferredSize(canvas, multiplier);
-            craftIngredientRenderer.render(canvas, Rect2i.createFromMinAndSize(x, 0, preferredSize.x, size.y), multiplier);
+            craftIngredientRenderer.render(canvas, RectUtility.createFromMinAndSize(x, 0, preferredSize.x, size.y), multiplier);
             x += preferredSize.x;
         }
 
         Vector2i resultSize = canvas.calculatePreferredSize(result);
         Vector2i buttonSize = canvas.calculatePreferredSize(button);
 
-        canvas.drawWidget(button, Rect2i.createFromMinAndSize(size.x - resultSize.x - buttonSize.x - 5, (size.y - buttonSize.y) / 2, buttonSize.x, buttonSize.y));
-        canvas.drawWidget(result, Rect2i.createFromMinAndSize(size.x - resultSize.x, 0, resultSize.x, resultSize.y));
+        canvas.drawWidget(button, RectUtility.createFromMinAndSize(size.x - resultSize.x - buttonSize.x - 5, (size.y - buttonSize.y) / 2, buttonSize.x, buttonSize.y));
+        canvas.drawWidget(result, RectUtility.createFromMinAndSize(size.x - resultSize.x, 0, resultSize.x, resultSize.y));
     }
 
+
     @Override
-    public void update(float delta) {
+    public boolean onKeyEvent(NUIKeyEvent event) {
         int maxMultiplier = processDisplay.getMaxMultiplier(entity);
-        if (Keyboard.isKeyDown(Keyboard.KeyId.LEFT_SHIFT)) {
+        if (event.getKeyboard().isKeyDown(Keyboard.KeyId.LEFT_SHIFT)) {
             multiplier = Math.min(maxMultiplier, 5);
-        } else if (Keyboard.isKeyDown(Keyboard.KeyId.LEFT_CTRL)) {
+        } else if (event.getKeyboard().isKeyDown(Keyboard.KeyId.LEFT_CTRL)) {
             multiplier = maxMultiplier;
         } else {
             multiplier = 1;
         }
+        return false;
+    }
 
+    @Override
+    public void update(float delta) {
         result.update(delta);
         button.update(delta);
     }

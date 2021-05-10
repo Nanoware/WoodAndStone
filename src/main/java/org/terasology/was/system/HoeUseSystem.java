@@ -15,21 +15,22 @@
  */
 package org.terasology.was.system;
 
+import org.joml.RoundingMode;
+import org.joml.Vector3i;
 import org.terasology.durability.ReduceDurabilityEvent;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.logic.common.ActivateEvent;
-import org.terasology.math.Side;
-import org.terasology.math.geom.Vector3i;
-import org.terasology.registry.In;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.logic.common.ActivateEvent;
+import org.terasology.engine.math.Side;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.WorldProvider;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
 import org.terasology.was.component.HoeComponent;
 import org.terasology.was.component.TillableComponent;
-import org.terasology.world.WorldProvider;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
 
 /**
  * @author Marcin Sciesinski <marcins78@gmail.com>
@@ -53,7 +54,7 @@ public class HoeUseSystem extends BaseComponentSystem {
         EntityRef target = event.getTarget();
         // Clicked on top of soil
         if (Side.inDirection(event.getHitNormal()) == Side.TOP && target.hasComponent(TillableComponent.class)) {
-            worldProvider.setBlock(new Vector3i(event.getTargetLocation(), 0.5f), tillEarthBlock);
+            worldProvider.setBlock(new Vector3i(event.getTargetLocation(), RoundingMode.HALF_UP), tillEarthBlock);
             item.send(new ReduceDurabilityEvent(1));
         }
     }

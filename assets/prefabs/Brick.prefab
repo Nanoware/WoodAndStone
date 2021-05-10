@@ -1,9 +1,8 @@
 {
     "parent": "engine:iconItem",
     "Item": {
-        "icon": "WoodAndStone:items.Brick",
-        "stackId": "WoodAndStone:items.Brick",
-        "renderWithIcon": true
+        "icon": "WoodAndStone:items#Brick",
+        "stackId": "WoodAndStone:items#Brick"
     },
     "DisplayName": {
         "name": "Brick"

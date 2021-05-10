@@ -17,11 +17,11 @@ package org.terasology.was.generator.plant.forest.grass;
 
 import org.terasology.anotherWorld.AnotherWorldBiomes;
 import org.terasology.anotherWorld.decorator.BlockCollectionPredicate;
+import org.terasology.engine.world.block.BlockUri;
+import org.terasology.engine.world.generator.plugin.RegisterPlugin;
 import org.terasology.gf.PlantType;
 import org.terasology.gf.generator.StaticBlockFloraSpawnDefinition;
 import org.terasology.was.generator.Blocks;
-import org.terasology.world.block.BlockUri;
-import org.terasology.world.generator.plugin.RegisterPlugin;
 
 import java.util.Arrays;
 
@@ -31,8 +31,8 @@ import java.util.Arrays;
 @RegisterPlugin
 public class ShroomForestSpawnDefinition extends StaticBlockFloraSpawnDefinition {
     public ShroomForestSpawnDefinition() {
-        super(PlantType.GRASS, AnotherWorldBiomes.FOREST.getId(), 0.5f, 0.3f, "Core:Shroom",
-                Arrays.asList(new BlockUri("Core:BigBrownShroom"), new BlockUri("Core:BrownShroom"), new BlockUri("Core:RedShroom")),
-                new BlockCollectionPredicate(Blocks.getBlock("Core:Grass")), null);
+        super(PlantType.GRASS, AnotherWorldBiomes.FOREST.getId().toLowerCase(), 0.5f, 0.3f, "CoreAssets:Shroom",
+                Arrays.asList(new BlockUri("CoreAssets:BigBrownShroom"), new BlockUri("CoreAssets:BrownShroom"), new BlockUri("CoreAssets:RedShroom")),
+                new BlockCollectionPredicate(Blocks.getBlock("CoreAssets:Grass")), null);
     }
 }

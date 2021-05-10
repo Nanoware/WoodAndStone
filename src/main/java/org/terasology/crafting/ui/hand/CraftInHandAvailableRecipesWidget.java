@@ -17,19 +17,19 @@ package org.terasology.crafting.ui.hand;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.joml.Vector2i;
 import org.terasology.crafting.event.UserCraftInHandRequest;
 import org.terasology.crafting.system.CraftInHandRecipeRegistry;
 import org.terasology.crafting.system.recipe.hand.CraftInHandRecipe;
 import org.terasology.crafting.ui.CraftRecipeWidget;
 import org.terasology.crafting.ui.CreationCallback;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.logic.players.LocalPlayer;
-import org.terasology.math.Vector2i;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.rendering.nui.Canvas;
-import org.terasology.rendering.nui.CoreWidget;
-import org.terasology.rendering.nui.UIWidget;
-import org.terasology.rendering.nui.layouts.ColumnLayout;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.logic.players.LocalPlayer;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.nui.Canvas;
+import org.terasology.nui.CoreWidget;
+import org.terasology.nui.UIWidget;
+import org.terasology.nui.layouts.ColumnLayout;
 
 import java.util.Iterator;
 import java.util.List;

@@ -16,13 +16,13 @@
 package org.terasology.crafting.system.recipe.render.result;
 
 import org.terasology.crafting.system.recipe.render.RecipeResultFactory;
-import org.terasology.entitySystem.entity.EntityManager;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.logic.common.DisplayNameComponent;
-import org.terasology.logic.inventory.ItemComponent;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.rendering.nui.layers.ingame.inventory.ItemIcon;
+import org.terasology.engine.entitySystem.entity.EntityManager;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.prefab.Prefab;
+import org.terasology.engine.logic.common.DisplayNameComponent;
+import org.terasology.engine.logic.inventory.ItemComponent;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.module.inventory.ui.ItemIcon;
 
 import java.util.List;
 
@@ -61,6 +61,8 @@ public class ItemRecipeResultFactory implements RecipeResultFactory {
 
     @Override
     public void setupDisplay(List<String> parameters, ItemIcon itemIcon) {
+        ItemComponent i = prefab.getComponent(ItemComponent.class);
+
         itemIcon.setIcon(prefab.getComponent(ItemComponent.class).icon);
         DisplayNameComponent displayName = prefab.getComponent(DisplayNameComponent.class);
         if (displayName != null) {

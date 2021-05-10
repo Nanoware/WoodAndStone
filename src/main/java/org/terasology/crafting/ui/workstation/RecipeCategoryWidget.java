@@ -15,15 +15,16 @@
  */
 package org.terasology.crafting.ui.workstation;
 
+import org.terasology.joml.geom.Rectanglei;
+import org.joml.Vector2i;
 import org.terasology.input.MouseInput;
-import org.terasology.math.Rect2i;
-import org.terasology.math.Vector2i;
-import org.terasology.rendering.assets.font.Font;
-import org.terasology.rendering.nui.BaseInteractionListener;
-import org.terasology.rendering.nui.Canvas;
-import org.terasology.rendering.nui.CoreWidget;
-import org.terasology.rendering.nui.InteractionListener;
-import org.terasology.rendering.nui.TextLineBuilder;
+import org.terasology.nui.BaseInteractionListener;
+import org.terasology.nui.Canvas;
+import org.terasology.nui.CoreWidget;
+import org.terasology.nui.InteractionListener;
+import org.terasology.nui.TextLineBuilder;
+import org.terasology.nui.asset.font.Font;
+import org.terasology.nui.events.NUIMouseClickEvent;
 
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class RecipeCategoryWidget extends CoreWidget {
 
     private InteractionListener interactionListener = new BaseInteractionListener() {
         @Override
-        public boolean onMouseClick(MouseInput button, Vector2i pos) {
-            if (button == MouseInput.MOUSE_LEFT) {
+        public boolean onMouseClick(NUIMouseClickEvent event) {
+            if (event.getMouseButton() == MouseInput.MOUSE_LEFT) {
                 callback.categoryToggled();
                 return true;
             }
@@ -48,7 +49,8 @@ public class RecipeCategoryWidget extends CoreWidget {
         }
     };
 
-    public RecipeCategoryWidget(boolean opened, int leftIndent, String name, int count, CategoryToggleCallback callback) {
+    public RecipeCategoryWidget(boolean opened, int leftIndent, String name, int count,
+                                CategoryToggleCallback callback) {
         this.opened = opened;
         this.leftIndent = leftIndent;
         this.name = name;
@@ -59,7 +61,7 @@ public class RecipeCategoryWidget extends CoreWidget {
     @Override
     public void onDraw(Canvas canvas) {
         Vector2i size = canvas.size();
-        canvas.drawText(getText(), Rect2i.createFromMinAndMax(leftIndent, 0, size.x, size.y));
+        canvas.drawText(getText(), new Rectanglei(leftIndent, 0, size.x, size.y));
         canvas.addInteractionRegion(interactionListener, "Toggle " + name);
     }
 
